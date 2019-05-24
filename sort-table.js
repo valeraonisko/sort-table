@@ -9,12 +9,12 @@ function complexCompare(colNum, type) {
   switch (type) {
     case 'number':
       return function(rowA, rowB) {
-        return rowA.cells[colNum].innerHTML - rowB.cells[colNum].innerHTML;
+        return Number(rowA.cells[colNum].textContent) - Number(rowB.cells[colNum].textContent);
       };
       break;
     case 'string':
       return function(rowA, rowB) {
-        return rowA.cells[colNum].innerHTML.localeCompare(rowB.cells[colNum].innerHTML);
+        return rowA.cells[colNum].textContent.localeCompare(rowB.cells[colNum].textContent);
       };
       break;
   }
@@ -22,9 +22,10 @@ function complexCompare(colNum, type) {
 }
 
 function sortGrid(colNum, type) {
-  let tbody = grid.getElementsByTagName('tbody')[0];
-  let rowsArray = Array.prototype.slice.call(tbody.rows);
+  const tbody = grid.getElementsByTagName('tbody')[0];
+  const rowsArray = Array.prototype.slice.call(tbody.rows);
   const compare = complexCompare(colNum, type);
+
   rowsArray.sort(compare);
   rowsArray.forEach((row) => {
     tbody.appendChild(row);
